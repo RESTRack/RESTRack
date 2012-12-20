@@ -69,6 +69,37 @@ class ARFormattedError < String
   end
 end
 
+class Hash
+  def symbolize!
+    new_keys = {}
+    self.each do |key,val|
+      if val.is_a? Hash or val.is_a? Array
+        val.symbolize!
+      end
+      unless key.is_a? Symbol or not key.respond_to?(:to_sym)
+        new_keys[key.to_sym] = self[key]
+        self.delete(key)
+      end
+    end
+    self.merge!(new_keys)
+  end
+  
+  def symbolize
+    self_clone = self.clone
+    new_keys = {}
+    self_clone.each do |key,val|
+      if val.is_a? Hash or val.is_a? Array
+        val = val.symbolize
+      end
+      unless key.is_a? Symbol or not key.respond_to?(:to_sym)
+        new_keys[key.to_sym] = val
+        self_clone.delete(key)
+      end
+    end
+    return self_clone.merge(new_keys)
+  end
+end
+
 # We will support ".text" as an extension
 MIME::Types['text/plain'][0].extensions << 'text'
 MIME::Types.index_extensions( MIME::Types['text/plain'][0] )

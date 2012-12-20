@@ -22,3 +22,8 @@ end
 
 include HTTPStatus
 include ActiveSupport::Inflector
+
+# TODO: configurable list of params to strip before logging
+# TODO: update README
+# TODO: markdown to html generator
+# TODO: async plugin

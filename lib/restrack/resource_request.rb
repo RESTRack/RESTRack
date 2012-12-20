@@ -1,7 +1,7 @@
 module RESTRack
   # The ResourceRequest class handles all incoming requests.
   class ResourceRequest
-    attr_reader :request, :request_id, :params, :post_params, :get_params, :active_controller
+    attr_reader :request, :request_id, :params, :post_params, :get_params, :active_controller, :headers
     attr_accessor :mime_type, :url_chain
 
     # Initialize the ResourceRequest by assigning a request_id and determining the path, format, and controller of the resource.
@@ -46,13 +46,13 @@ module RESTRack
       @post_params = parse_body( @request )
       @get_params = parse_query_string( @request )
       @params = {}
-      # TODO: symbolize!
       if @post_params.respond_to?(:merge)
         @params = @post_params.merge( @get_params )
       else
         @params = @get_params
       end
-      RESTRack.log.debug 'combined params: ' + @params.inspect
+      @params.symbolize!
+      log_request_params(@params)
 
       # Pull first controller from URL
       @active_resource_name = @url_chain.shift
@@ -66,6 +66,10 @@ module RESTRack
       raise HTTP403Forbidden unless RESTRack::CONFIG[:ROOT_RESOURCE_ACCEPT].blank? or RESTRack::CONFIG[:ROOT_RESOURCE_ACCEPT].include?(@active_resource_name)
       raise HTTP403Forbidden if not RESTRack::CONFIG[:ROOT_RESOURCE_DENY].blank? and RESTRack::CONFIG[:ROOT_RESOURCE_DENY].include?(@active_resource_name)
       @active_controller = instantiate_controller( @active_resource_name )
+    end
+
+    def log_request_params(params_hash)
+      RESTRack.request_log.debug 'Combined Request Params: ' + params_hash.inspect
     end
 
     # Call the next entity in the path stack.
