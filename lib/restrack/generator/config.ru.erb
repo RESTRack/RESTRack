@@ -1,3 +1,9 @@
 # rackup config.ru
+
+#use bundler instead of doing "require <gem>" at all places
+require 'rubygems'
+require 'bundler'
+Bundler.require
+
 require File.join(File.dirname(__FILE__),'loader')
 run <%= @service_name.camelize %>::WebService.new
