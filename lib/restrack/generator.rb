@@ -12,7 +12,8 @@ module RESTRack
       :constants              => 'constants.yaml.erb',
       :controller             => 'controller.rb.erb',
       :descendant_controller  => 'descendant_controller.rb.erb',
-      :hooks                  => 'hooks.rb.erb'
+      :hooks                  => 'hooks.rb.erb',
+      :gemfile                => 'Gemfile.erb'
     }
 
     class << self
@@ -59,6 +60,11 @@ module RESTRack
         template = get_template_for( :hooks )
         resultant_string = template.result( get_binding_for_service( name ) )
         File.open("#{name}/hooks.rb", 'w') {|f| f.puts resultant_string }
+        
+        # Added following lines to generate 'Gemfile' automatically.
+        template = get_template_for( :gemfile )
+        resultant_string = template.result( get_binding_for_service( name ) )
+        File.open("#{name}/Gemfile", 'w') {|f| f.puts resultant_string }
       end
 
       private
