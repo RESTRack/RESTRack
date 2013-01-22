@@ -22,5 +22,3 @@ end
 
 include HTTPStatus
 include ActiveSupport::Inflector
-
-# TODO: update README
