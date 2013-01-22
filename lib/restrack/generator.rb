@@ -37,7 +37,9 @@ module RESTRack
         FileUtils.makedirs("#{base_dir}/views/#{name}")
       end
 
-      # Generate a new RESTRack service
+      # The guts for generating a new RESTRack service. The loader.rb template
+      # will create a RESTRack::WebService or RESTRack::AsyncWebService based on
+      # the value of @async.
       def generate_service(name)
         FileUtils.makedirs("#{name}/config")
         FileUtils.makedirs("#{name}/controllers")
@@ -60,11 +62,25 @@ module RESTRack
         template = get_template_for( :hooks )
         resultant_string = template.result( get_binding_for_service( name ) )
         File.open("#{name}/hooks.rb", 'w') {|f| f.puts resultant_string }
-        
+
         # Added following lines to generate 'Gemfile' automatically.
         template = get_template_for( :gemfile )
         resultant_string = template.result( get_binding_for_service( name ) )
         File.open("#{name}/Gemfile", 'w') {|f| f.puts resultant_string }
+      end
+      # Generate a new RESTRack service.  This does not use EventMachine and can
+      # be used with any Rack supported web server.
+      def generate_synchronous_service(name)
+        @async = false
+        generate_service(name)
+        @async = nil
+      end
+      # Generate a new RESTRack service that uses EventMachine. This can only be
+      # used with web servers that use or support EventMachine (Thin, Rainbows).
+      def generate_asynchronous_service(name)
+        @async = true
+        generate_service(name)
+        @async = nil
       end
 
       private

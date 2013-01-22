@@ -12,7 +12,10 @@ when :generate, :gen, :g
   case noun.to_sym
   when :service, :serv, :s
     puts "Generating new RESTRack service #{name}..."
-    RESTRack::Generator.generate_service( name )
+    RESTRack::Generator.generate_synchronous_service( name )
+  when :asynchronous_service, :asynch_service, :async_serv, :async, :as
+    puts "Generating new RESTRack service #{name}..."
+    RESTRack::Generator.generate_asynchronous_service( name )
   when :controller, :cont, :c
     predicate  = ARGV[3] ? ARGV[3].to_sym : nil
     case predicate
@@ -30,6 +33,6 @@ when :server, :s
   options = { :Port => noun || 9292, :config => 'config.ru' }
   options.merge({ :environment => ARGV[2] }) unless ARGV[2].nil?
   Rack::Server.start( options )
+when :version, :v
+  puts "Currently using RESTRack version " + RESTRack::VERSION.to_s + "."
 end
-
-# TODO: Print current version of RESTrack via command-line call

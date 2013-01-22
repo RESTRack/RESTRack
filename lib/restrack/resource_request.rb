@@ -15,9 +15,6 @@ module RESTRack
       @request.env.select {|k,v| k.start_with? 'HTTP_'}.each do |k,v|
         @headers[k.sub(/^HTTP_/, '')] = v
       end
-    end
-
-    def prepare
       # MIME type should be determined before raising any exceptions for proper error reporting
         # Set up the initial routing.
       @url_chain = @request.path_info.split('/')
@@ -32,16 +29,17 @@ module RESTRack
       end
         # Determine MIME type from extension
       @mime_type = get_mime_type_from( extension )
+    end
+
+    def prepare
       # Now safe to raise exceptions
       raise HTTP400BadRequest, "Request path of #{@request.path_info} is invalid" if @request.path_info.include?('//')
-
       # For CORS support
       if RESTRack::CONFIG[:CORS]
         raise HTTP403Forbidden if @headers['Origin'].nil?
         raise HTTP403Forbidden unless RESTRack::CONFIG[:CORS]['Access-Control-Allow-Origin'] == '*' or RESTRack::CONFIG[:CORS]['Access-Control-Allow-Origin'].include?(@headers['Origin'])
         raise HTTP403Forbidden unless @request.env['REQUEST_METHOD'] == 'OPTIONS' or RESTRack::CONFIG[:CORS]['Access-Control-Allow-Methods'] == '*' or RESTRack::CONFIG[:CORS]['Access-Control-Allow-Methods'].include?(@request.env['REQUEST_METHOD'])
       end
-
       # Pull input data from POST body
       @post_params = parse_body( @request )
       @get_params = parse_query_string( @request )
@@ -53,7 +51,6 @@ module RESTRack
       end
       @params.symbolize!
       log_request_params(@params)
-
       # Pull first controller from URL
       @active_resource_name = @url_chain.shift
       unless @active_resource_name.nil? or RESTRack.controller_exists?(@active_resource_name)
@@ -69,7 +66,13 @@ module RESTRack
     end
 
     def log_request_params(params_hash)
-      RESTRack.request_log.debug 'Combined Request Params: ' + params_hash.inspect
+      params_to_log = params_hash.clone
+      if RESTRack::CONFIG[:PARAMS_NOT_LOGGABLE]
+        params_to_log.each_key do |param|
+          params_to_log[param] = '*****' if RESTRack::CONFIG[:PARAMS_NOT_LOGGABLE].include?(param.to_s)
+        end
+      end
+      RESTRack.request_log.debug 'Combined Request Params: ' + params_to_log.inspect
     end
 
     # Call the next entity in the path stack.

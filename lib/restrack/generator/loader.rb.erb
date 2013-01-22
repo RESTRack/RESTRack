@@ -1,7 +1,7 @@
 require 'restrack'
 
 module <%= @service_name.camelize %>; end
-class <%= @service_name.camelize %>::WebService < RESTRack::WebService; end
+class <%= @service_name.camelize %>::WebService < RESTRack::<%= @async ? 'Async' : '' %>WebService; end
 
 RESTRack::CONFIG = RESTRack::load_config(File.join(File.dirname(__FILE__), 'config/constants.yaml'))
 RESTRack::CONFIG[:ROOT] = File.dirname(__FILE__)

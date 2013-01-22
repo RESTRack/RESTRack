@@ -1,7 +1,7 @@
 # RESTRack
 - serving JSON and XML with REST and pleasure.
 
-## Description:
+## Description
 RESTRack is a [Rack](http://rack.rubyforge.org/)-based [MVC](http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller)
 framework that makes it extremely easy to develop [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer)ful
 data services. It is inspired by [Rails](http://rubyonrails.org), and follows a few of its conventions.  But it has no routes
@@ -17,12 +17,8 @@ view directory grouped by controller name subdirectories \(`view/<controller>/<a
 requests will then render the view template with the builder gem, rather than generating XML with XmlSimple.
 
 
-## Installation:
-### Using [RubyGems](http://rubygems.org):
-    <sudo> gem install restrack
-
-
-## Why RESTRack when there is Rails?
+## Rationale
+### Why RESTRack when there is Rails?
 [Rails](http://rubyonrails.org/) is a powerful tool for full web applications.  RESTRack is targeted at making
 development of lightweight data services as easy as possible, while still giving you a performant and extensible
 framework.  The primary goal of of the development of RESTRack was to add as little as possible to the framework to give
@@ -32,8 +28,13 @@ Rails 3 instantiates approximately 80K more objects than RESTRack to do a hello 
 the default setup.  Trimming Rails down by eliminating ActiveRecord, ActionMailer, and ActiveResource, it still
 instantiates over 47K more objects than RESTRack.
 
-## OK, so why RESTRack when there is Sinatra?
+### OK, so why RESTRack when there is Sinatra?
 RESTRack provides a full, albeit small, framework for developing RESTful MVC applications.
+
+
+## Installation
+### Using [RubyGems](http://rubygems.org):
+    <sudo> gem install restrack
 
 
 ## CLI Usage:

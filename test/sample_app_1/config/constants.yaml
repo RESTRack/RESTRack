@@ -27,6 +27,9 @@
 # The stack trace will not be added to 500 response body by default, set to true to enable.
 :SHOW_STACK:              true
 
+# A list of input parameters which should not be output to logs:
+:PARAMS_NOT_LOGGABLE:     [ password ]
+
 # :TRANSCODE: and :FORCE_ENCODING: are optional config settings
 # String#encode will be called when this value is set
 #:TRANSCODE:               ISO-8859-1  #or UTF-8 etc

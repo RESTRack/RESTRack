@@ -1,3 +1,4 @@
 source :rubygems
 
-gem "restrack","~><%=RESTRack::VERSION%>"
+gem "restrack","~><%= RESTRack::VERSION.to_s %>"
+<%= @async ? 'gem "eventmachine"' : '' %>

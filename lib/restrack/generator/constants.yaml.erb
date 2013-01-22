@@ -22,3 +22,34 @@
 :ROOT_RESOURCE_ACCEPT:    []
 # These are the resources which cannot be accessed from the root of your web service. Use either this or ROOT_RESOURCE_ACCEPT as a blacklist or whitelist to establish routing (relationships defined in resource controllers define further routing).
 :ROOT_RESOURCE_DENY:      []
+
+# A list of input parameters which should not be output to logs:
+#:PARAMS_NOT_LOGGABLE:     [:password]
+
+# :TRANSCODE: and :FORCE_ENCODING: are optional config settings
+# String#encode will be called when this value is set
+#:TRANSCODE:               ISO-8859-1  #or UTF-8 etc
+# String#force_encoding will be called when this value is set
+#:FORCE_ENCODING:          ISO-8859-1
+
+# :CORS: is an optional config setting
+# CORS Header configuration
+#   Supported:
+#    - Access-Control-Allow-Origin: http://localhost
+#    - Access-Control-Allow-Methods: POST, GET
+#   List of all:
+#    - Access-Control-Allow-Origin: <origin> | *
+#       e.g. Access-Control-Allow-Origin: http://mozilla.com
+#    - Access-Control-Expose-Headers: X-My-Custom-Header, X-Another-Custom-Header
+#    - Access-Control-Max-Age: <delta-seconds>
+#    - Access-Control-Allow-Credentials: true | false
+#    - Access-Control-Allow-Methods: <method>[, <method>]*
+#       e.g. Access-Control-Allow-Methods: POST, GET
+#    - Access-Control-Allow-Headers: <field-name>[, <field-name>]*
+#:CORS:
+#  Access-Control-Allow-Origin: http://restrack.me
+#  Access-Control-Allow-Methods: POST, GET
+
+# :PRE_PROCESSOR_DISABLED: and :POST_PROCESSOR_DISABLED: are optional config settings and are false by default
+#:PRE_PROCESSOR_DISABLED:  true
+#:POST_PROCESSOR_DISABLED:  true

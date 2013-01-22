@@ -38,8 +38,12 @@ Rake::TestTask.new('test4') { |t|
   t.pattern = 'test/sample_app_4/**/test_*.rb'
 }
 
-
 desc 'Run sample_app_5 tests.'
 Rake::TestTask.new('test5') { |t|
   t.pattern = 'test/sample_app_5/**/test_*.rb'
+}
+
+desc 'Run async app 1 tests.'
+Rake::TestTask.new('asynctest1') { |t|
+  t.pattern = 'test/sample_app_async_1/**/test_*.rb'
 }

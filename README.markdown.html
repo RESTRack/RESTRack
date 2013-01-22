@@ -1,10 +1,19 @@
-<h1>RESTRack</h1>
+
+    <!doctype html>
+    <html lang="fr">
+    <head>
+    <meta charset="utf-8">
+    <title>RESTRack</title>
+    <link rel="stylesheet" href="http://covertprestige.info/public/css/all.css" />
+    </head>
+    <body>
+    <h1>RESTRack</h1>
 
 <ul>
 <li>serving JSON and XML with REST and pleasure.</li>
 </ul>
 
-<h2>Description:</h2>
+<h2>Description</h2>
 
 <p>RESTRack is a <a href="http://rack.rubyforge.org/">Rack</a>-based <a href="http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller">MVC</a>
 framework that makes it extremely easy to develop <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>ful
@@ -20,14 +29,16 @@ file, routing relationships are done through supplying custom code blocks to cla
 view directory grouped by controller name subdirectories (<code>view/&lt;controller&gt;/&lt;action&gt;.xml.builder</code>).  XML format
 requests will then render the view template with the builder gem, rather than generating XML with XmlSimple.</p>
 
-<h2>Installation:</h2>
+<h2>Installation</h2>
 
 <h3>Using <a href="http://rubygems.org">RubyGems</a>:</h3>
 
 <pre><code>&lt;sudo&gt; gem install restrack
 </code></pre>
 
-<h2>Why RESTRack when there is Rails?</h2>
+<h2>Rationale</h2>
+
+<h3>Why RESTRack when there is Rails?</h3>
 
 <p><a href="http://rubyonrails.org/">Rails</a> is a powerful tool for full web applications.  RESTRack is targeted at making
 development of lightweight data services as easy as possible, while still giving you a performant and extensible
@@ -38,7 +49,7 @@ the web developer a good application space for developing JSON and XML services.
 the default setup.  Trimming Rails down by eliminating ActiveRecord, ActionMailer, and ActiveResource, it still
 instantiates over 47K more objects than RESTRack.</p>
 
-<h2>OK, so why RESTRack when there is Sinatra?</h2>
+<h3>OK, so why RESTRack when there is Sinatra?</h3>
 
 <p>RESTRack provides a full, albeit small, framework for developing RESTful MVC applications.</p>
 
@@ -345,3 +356,7 @@ Software.</p>
 WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+    </body>
+    </html>
+    
