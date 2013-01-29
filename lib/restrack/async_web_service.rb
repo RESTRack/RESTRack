@@ -1,5 +1,19 @@
 require 'eventmachine'
 
+class DeferrableBody
+  include EventMachine::Deferrable
+
+  def call(body)
+    body.each do |chunk|
+      @body_callback.call(chunk)
+    end
+  end
+
+  def each(&blk)
+    @body_callback = blk
+  end
+end
+
 module RESTRack
   class AsyncWebService
     AsyncResponse = [-1, {}, []].freeze
@@ -12,12 +26,12 @@ module RESTRack
 
     # Handle requests in the Rack way.
     def call( env )
-      EventMachine::defer do
-        resource_request = RESTRack::ResourceRequest.new( :request => Rack::Request.new(env) )
-        unless @request_hook.nil? or (RESTRack::CONFIG.has_key?(:PRE_PROCESSOR_DISABLED) and RESTRack::CONFIG[:PRE_PROCESSOR_DISABLED])
-          @request_hook.pre_processor(resource_request)
-        end
-        response = RESTRack::Response.new(resource_request)
+      resource_request = RESTRack::ResourceRequest.new( :request => Rack::Request.new(env) )
+      unless @request_hook.nil? or (RESTRack::CONFIG.has_key?(:PRE_PROCESSOR_DISABLED) and RESTRack::CONFIG[:PRE_PROCESSOR_DISABLED])
+        @request_hook.pre_processor(resource_request)
+      end
+      response = RESTRack::Response.new(resource_request)
+      unless resource_request.requires_async_defer
         unless @request_hook.nil? or (RESTRack::CONFIG.has_key?(:POST_PROCESSOR_DISABLED) and RESTRack::CONFIG[:POST_PROCESSOR_DISABLED])
           @request_hook.post_processor(response)
         end
