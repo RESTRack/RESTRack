@@ -87,6 +87,14 @@ module RESTRack
       @mime_type.to_s
     end
 
+    def requires_async_defer
+      @requires_async_defer ||= RESTRack::CONFIG[:REQUIRES_ASYNC_DEFER] || false
+    end
+
+    def requires_async_defer=(boolean)
+      @require_async_defer = boolean
+    end
+
     private
     def get_request_id
       t = Time.now
